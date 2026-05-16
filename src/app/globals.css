@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f8fafc;
+  --foreground: #171717;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* CV page screen preview */
+.cv-page {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  background: white;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+}
+
+@media print {
+  /* Hide everything except the CV */
+  body > * { display: none !important; }
+  #cv-print-root,
+  #cv-print-root * { display: revert !important; }
+
+  #cv-print-root {
+    display: block !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  /* Reset cv-page for print — browser handles margins */
+  .cv-page {
+    width: 100% !important;
+    min-height: unset !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 12mm 15mm 12mm 15mm;
+  }
+
+  /* Prevent awkward page breaks */
+  .cv-experience-item { break-inside: avoid; }
+  .cv-section { break-inside: avoid; }
+  .cv-section-header { break-after: avoid; }
+
+  /* Ensure background colors print (for Modern sidebar) */
+  * {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}
